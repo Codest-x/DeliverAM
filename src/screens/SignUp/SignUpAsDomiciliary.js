@@ -4,9 +4,11 @@ import ButtonWithLoader from '../../components/ButtonWithLoader';
 import {theme} from '../../constants/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useAuth} from '../../contexts/auth';
+import {useNavigation} from '@react-navigation/native';
 
 export default function SignUpAsDomiciliary() {
   const auth = useAuth();
+  const navigation = useNavigation();
   const [state, setState] = useState({
     isLoading: false,
     nombres: '',
@@ -33,13 +35,16 @@ export default function SignUpAsDomiciliary() {
 
   const onSignup = async () => {
     updateState({isLoading: true});
-    await auth.signUpAsDomiciliary({
+    const signUpRes = await auth.signUpAsDomiciliary({
       nombres,
       apellidos,
       telefono,
       email,
       password,
     });
+
+    !signUpRes ? navigation.navigate('Login') : null;
+
     updateState({isLoading: false});
   };
 

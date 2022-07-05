@@ -9,6 +9,7 @@ import {useAuth} from '../../contexts/auth';
 
 export default function SignUpAsClient() {
   const auth = useAuth();
+  const navigation = useNavigation();
 
   const [state, setState] = useState({
     isLoading: false,
@@ -35,13 +36,11 @@ export default function SignUpAsClient() {
     isSecureConfirmPwd,
   } = state;
 
-  const navigation = useNavigation();
-
   const updateState = data => setState(() => ({...state, ...data}));
 
   const onSignup = async () => {
     updateState({isLoading: true});
-    await auth.signUpAsClient({
+    const signUpRes = await auth.signUpAsClient({
       nombres,
       apellidos,
       telefono,
@@ -49,6 +48,8 @@ export default function SignUpAsClient() {
       password,
       direccion,
     });
+
+    !signUpRes ? navigation.navigate('Login') : null;
     updateState({isLoading: false});
   };
 

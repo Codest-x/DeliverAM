@@ -48,14 +48,19 @@ const AuthProvider = ({children}) => {
     //call the service passing credential (email and password).
     //In a real App this data will be provided by the user from some InputText components.
 
+    let errors = false;
+
     await signInService(email, password)
       .then(({data}) => {
         setAuthData(data);
         AsyncStorage.setItem('@AuthData', JSON.stringify(data));
       })
       .catch(err => {
+        err ? (errors = err.response.data.error) : false;
         showError('Error', err.response.data.error);
       });
+
+    return errors;
 
     //setAuthData(_authData);
 
@@ -65,6 +70,8 @@ const AuthProvider = ({children}) => {
   };
 
   const signUpAsClient = async data => {
+    let errors = false;
+
     await registerClientService(data)
       .then(({data}) => {
         console.log(data);
@@ -75,11 +82,16 @@ const AuthProvider = ({children}) => {
         //signIn(data.email, data.password);
       })
       .catch(err => {
+        err ? (errors = err.response.data.message) : false;
         showError('Error', err.response.data.message);
       });
+
+    return errors;
   };
 
   const signUpAsDomiciliary = async data => {
+    let errors = false;
+
     await registerDomiciliaryService(data)
       .then(({data}) => {
         console.log(data);
@@ -90,8 +102,11 @@ const AuthProvider = ({children}) => {
         //signIn(data.email, data.password);
       })
       .catch(err => {
+        err ? (errors = err.response.data.message) : false;
         showError('Error', err.response.data.message);
       });
+
+    return errors;
   };
 
   const signOut = async () => {

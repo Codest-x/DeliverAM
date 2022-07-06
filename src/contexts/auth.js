@@ -4,6 +4,7 @@ import {
   signInService,
   registerClientService,
   registerDomiciliaryService,
+  getUserByToken,
 } from '../services/authService';
 import {showError, showSuccess} from '../utils/helperFunctions';
 
@@ -51,9 +52,19 @@ const AuthProvider = ({children}) => {
     let errors = false;
 
     await signInService(email, password)
-      .then(({data}) => {
-        setAuthData(data);
-        AsyncStorage.setItem('@AuthData', JSON.stringify(data));
+      .then(async ({data}) => {
+        const user = await getUserByToken(data.token);
+        setAuthData({
+          token: data.token,
+          user: user.data,
+        });
+        AsyncStorage.setItem(
+          '@AuthData',
+          JSON.stringify({
+            token: data.token,
+            user: user.data,
+          }),
+        );
       })
       .catch(err => {
         err ? (errors = err.response.data.error) : false;

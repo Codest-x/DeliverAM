@@ -45,6 +45,22 @@ const registerDomiciliaryService = async data => {
   });
 };
 
+const sendUserUbication = async data => {
+  await axios.post(
+    `${api.SEND_DOMICILIARY_UBICATION}${data.userId}`,
+    {
+      lat: data?.latitude,
+      long: data?.longitude,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': data.token,
+      },
+    },
+  );
+};
+
 /* export async function forgotPassword(data) {
   try {
     let res = await axios.post(c.FORGOT_PASSWORD, data);
@@ -83,4 +99,5 @@ export {
   registerClientService,
   registerDomiciliaryService,
   getUserByToken,
+  sendUserUbication,
 };

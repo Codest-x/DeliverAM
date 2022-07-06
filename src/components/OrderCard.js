@@ -12,12 +12,19 @@ export default function OrderCard({data, children}) {
         styles.CardOrder,
         data.status === 'En Espera' && {
           borderBottomColor: theme.colors.accentColor,
+          shadowColor: theme.colors.accentColor,
         },
         data.status === 'Pendiente' && {
           borderBottomColor: 'red',
+          shadowColor: 'red',
         },
         data.status === 'Completado' && {
           borderBottomColor: 'green',
+          shadowColor: 'green',
+        },
+        data.status === 'Cancelado' && {
+          borderBottomColor: 'gray',
+          shadowColor: 'gray',
         },
       ]}>
       {children}
@@ -53,7 +60,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
     padding: 10,
-    shadowColor: '#000',
     borderBottomWidth: 3,
     shadowOffset: {
       width: 0,

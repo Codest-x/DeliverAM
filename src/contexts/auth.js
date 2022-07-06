@@ -7,6 +7,7 @@ import {
   getUserByToken,
 } from '../services/authService';
 import {showError, showSuccess} from '../utils/helperFunctions';
+import RNLocation from 'react-native-location';
 
 //Create the Auth Context to be used by the App
 
@@ -14,6 +15,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
   const [authData, setAuthData] = useState();
+  const [location, setLocation] = useState();
 
   //the AuthContext start with loading equals true
   //and stay like this, until the data be load from Async Storage
@@ -25,6 +27,7 @@ const AuthProvider = ({children}) => {
     //and call de loadStorage function.
 
     loadStorageData();
+    getUserLocationPermissions();
   }, []);
 
   async function loadStorageData() {
@@ -43,6 +46,22 @@ const AuthProvider = ({children}) => {
       //loading finished
       setLoading(false);
     }
+  }
+
+  async function getUserLocationPermissions() {
+    RNLocation.checkPermission({
+      ios: 'whenInUse',
+      android: {
+        detail: 'coarse',
+      },
+    }).then(granted => {
+      if (granted) {
+        RNLocation.subscribeToLocationUpdates(location => {
+          AsyncStorage.setItem('@UserLocation', JSON.stringify(location[0]));
+          setLocation(location[0]);
+        });
+      }
+    });
   }
 
   const signIn = async (email, password) => {
@@ -139,6 +158,7 @@ const AuthProvider = ({children}) => {
     <AuthContext.Provider
       value={{
         authData,
+        location,
         loading,
         signUpAsClient,
         signUpAsDomiciliary,

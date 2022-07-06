@@ -39,7 +39,10 @@ export default function Login({navigation}) {
       source={require('../../assets/images/bg-map.png')}
       resizeMode="cover"
       imageStyle={{opacity: 0.5}}>
-      <StatusBar backgroundColor={theme.colors.primaryColor} />
+      <StatusBar
+        backgroundColor={theme.colors.primaryColor}
+        translucent={false}
+      />
       <View style={styles.UserLoginInfo}>
         <Image
           style={{width: 250, height: 250}}

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Button,
   ImageBackground,
+  StatusBar,
 } from 'react-native';
 import React from 'react';
 import {theme} from '../../constants/theme';
@@ -36,6 +37,7 @@ const SignUpType = ({navigation}) => {
       source={require('../../assets/images/bg-map.png')}
       resizeMode="cover"
       imageStyle={{opacity: 0.5}}>
+      <StatusBar translucent={false} />
       <View
         style={{
           display: 'flex',

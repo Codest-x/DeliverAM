@@ -1,12 +1,15 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import CustomDrawer from '../components/CustomDrawer';
-import {Home} from '../screens';
-import Icon from 'react-native-vector-icons/Ionicons';
-
-const Drawer = createDrawerNavigator();
+import {useAuth} from '../contexts/auth';
+import ClientStack from './ClientStack';
+import DomiciliaryStack from './DomiciliaryStack';
 
 export default function AppStack() {
+  const {authData} = useAuth();
+
+  const Drawer = createDrawerNavigator();
+
   return (
     <Drawer.Navigator
       backBehavior={'initialRoute'}
@@ -24,19 +27,9 @@ export default function AppStack() {
           marginLeft: -25,
         },
       }}>
-      <Drawer.Screen
-        name="Inicio"
-        component={Home}
-        options={{
-          headerShown: false,
-          /* drawerItemStyle: {
-            height: 0,
-          }, */
-          drawerIcon: ({color}) => (
-            <Icon name={'home-outline'} size={24} color={color} />
-          ),
-        }}
-      />
+      {authData?.user?.roles[0]?.name === 'Cliente'
+        ? ClientStack(Drawer)
+        : DomiciliaryStack(Drawer)}
     </Drawer.Navigator>
   );
 }

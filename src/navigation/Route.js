@@ -7,6 +7,7 @@ import AppStack from './AppStack';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from '../utils/toastConfig';
 import {useAuth} from '../contexts/auth';
+import LoadingScreen from '../screens/loadingScreen';
 
 export default function Routes() {
   const Stack = createStackNavigator();
@@ -23,7 +24,13 @@ export default function Routes() {
         hidden={false}
       />
       <Stack.Navigator>
-        {!authData ? (
+        {loading ? (
+          <Stack.Screen
+            name="Loading"
+            component={LoadingScreen}
+            options={{headerShown: false}}
+          />
+        ) : !authData ? (
           <Stack.Screen
             name="AuthStack"
             component={AuthStack}

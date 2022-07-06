@@ -7,3 +7,4 @@ export const getApiUrl = endpoint => {
 export const LOGIN = getApiUrl('/auth/login');
 export const SIGNUP_CLIENT = getApiUrl('/auth/client/signup');
 export const SIGNUP_DOMICILIARY = getApiUrl('/auth/domiciliary/signup');
+export const USER_BY_TOKEN = getApiUrl('/auth');

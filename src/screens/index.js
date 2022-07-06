@@ -1,7 +1,8 @@
-import Home from './ClientScreens/home';
+import HomeC from './ClientScreens/HomeC';
+import HomeD from './DomiciliaryScreens/HomeD';
 import Login from './Login/Login';
 import SignUp from './SignUp/SignUp';
 import SignUpType from './SignUp/SignUpType';
 import OnboardingScreen from './OnBoarding/OnBoarding';
 
-export {Home, Login, SignUp, SignUpType, OnboardingScreen};
+export {HomeC, HomeD, Login, SignUp, SignUpType, OnboardingScreen};

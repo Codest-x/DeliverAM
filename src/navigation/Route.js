@@ -18,10 +18,11 @@ export default function Routes() {
     <NavigationContainer>
       <StatusBar
         animated={true}
-        backgroundColor={'#fff'}
+        backgroundColor={'transparent'}
         barStyle="default"
         showHideTransition="fade"
         hidden={false}
+        translucent={true}
       />
       <Stack.Navigator>
         {loading ? (

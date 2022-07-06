@@ -31,20 +31,6 @@ export default function Login({navigation}) {
     updateState({isLoading: true});
     await auth.signIn(email, password);
     updateState({isLoading: false});
-
-    /* api
-      .login({email, password})
-      .then(async ({data}) => {
-        await handleLogin(data);
-        navigation.navigate('AppStack', {
-          screen: 'Home',
-        });
-        updateState({email: '', password: ''});
-      })
-      .catch(err => {
-        updateState({isLoading: false});
-        showError('Error', err.response.data.error);
-      }); */
   };
 
   return (

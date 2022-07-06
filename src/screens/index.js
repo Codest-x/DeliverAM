@@ -1,4 +1,4 @@
-import Home from './home';
+import Home from './ClientScreens/home';
 import Login from './Login/Login';
 import SignUp from './SignUp/SignUp';
 import SignUpType from './SignUp/SignUpType';

@@ -52,7 +52,7 @@ const AuthProvider = ({children}) => {
     RNLocation.checkPermission({
       ios: 'whenInUse',
       android: {
-        detail: 'coarse',
+        detail: 'fine',
       },
     }).then(granted => {
       if (granted) {

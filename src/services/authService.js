@@ -14,7 +14,7 @@ const signInService = async (email, _password) => {
       password: _password,
     },
     {
-      Headers: {
+      headers: {
         'Content-Type': 'application/json',
       },
     },
@@ -23,15 +23,23 @@ const signInService = async (email, _password) => {
 
 const registerClientService = async data => {
   return await axios.post(api.SIGNUP_CLIENT, data, {
-    Headers: {
+    headers: {
       'Content-Type': 'application/json',
+    },
+  });
+};
+
+const getUserByToken = async token => {
+  return await axios.get(api.USER_BY_TOKEN, {
+    headers: {
+      'x-access-token': token,
     },
   });
 };
 
 const registerDomiciliaryService = async data => {
   return await axios.post(api.SIGNUP_DOMICILIARY, data, {
-    Headers: {
+    headers: {
       'Content-Type': 'application/json',
     },
   });
@@ -70,4 +78,9 @@ export async function updateProfile(userId, data) {
   }
 } */
 
-export {signInService, registerClientService, registerDomiciliaryService};
+export {
+  signInService,
+  registerClientService,
+  registerDomiciliaryService,
+  getUserByToken,
+};

@@ -6,14 +6,12 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {useAuth} from '../../contexts/auth';
 import {theme} from '../../constants/theme';
 import OrderCard from '../../components/OrderCard';
 import MapComponent from '../../components/MapComponent';
 import {getAllDomiciliaryUbications} from '../../services/clientService';
 
 export default function HomeC({navigation}) {
-  const {location} = useAuth();
   const [refreshing, setRefreshing] = useState(false);
   const [domiciliaryMarkers, setMarkers] = useState([]);
 

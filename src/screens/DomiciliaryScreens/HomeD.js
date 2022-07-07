@@ -4,9 +4,11 @@ import {theme} from '../../constants/theme';
 import {useAuth} from '../../contexts/auth';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import {sendUserUbication} from '../../services/authService';
+import {useLocation} from '../../contexts/location';
 
 export default function HomeD() {
-  const {authData, loading, location} = useAuth();
+  const {authData, loading} = useAuth();
+  const {locationData} = useLocation();
 
   useEffect(() => {
     !loading && authData && sendUserUbicationAsync();
@@ -15,8 +17,8 @@ export default function HomeD() {
   const sendUserUbicationAsync = async () => {
     sendUserUbication({
       userId: authData?.user?._id,
-      latitude: location?.latitude,
-      longitude: location?.longitude,
+      latitude: locationData?.latitude,
+      longitude: locationData?.longitude,
       token: authData?.token,
     })
       .then(() => {

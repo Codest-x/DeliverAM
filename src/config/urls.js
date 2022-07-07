@@ -1,4 +1,4 @@
-export const API_URL = 'http://192.168.201.4:3000';
+export const API_URL = 'https://deliveram-api.herokuapp.com';
 
 export const getApiUrl = endpoint => {
   return `${API_URL}${endpoint}`;

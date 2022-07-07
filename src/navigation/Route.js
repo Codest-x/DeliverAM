@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {StatusBar} from 'react-native';
@@ -7,12 +7,17 @@ import AppStack from './AppStack';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from '../utils/toastConfig';
 import {useAuth} from '../contexts/auth';
-import LoadingScreen from '../screens/loadingScreen';
+import {LoadingScreen, OfflineScreen} from '../screens';
+import NetInfo from '@react-native-community/netinfo';
 
 export default function Routes() {
   const Stack = createStackNavigator();
-
   const {authData, loading} = useAuth();
+  const [isConnected, setIsConnected] = useState(false);
+
+  NetInfo.fetch().then(state => {
+    setIsConnected(state.isConnected);
+  });
 
   return (
     <NavigationContainer>
@@ -25,22 +30,30 @@ export default function Routes() {
         translucent={true}
       />
       <Stack.Navigator>
-        {loading ? (
-          <Stack.Screen
-            name="Loading"
-            component={LoadingScreen}
-            options={{headerShown: false}}
-          />
-        ) : !authData ? (
-          <Stack.Screen
-            name="AuthStack"
-            component={AuthStack}
-            options={{headerShown: false}}
-          />
+        {isConnected ? (
+          loading ? (
+            <Stack.Screen
+              name="Loading"
+              component={LoadingScreen}
+              options={{headerShown: false}}
+            />
+          ) : authData && authData?.token ? (
+            <Stack.Screen
+              name="AppStack"
+              component={AppStack}
+              options={{headerShown: false}}
+            />
+          ) : (
+            <Stack.Screen
+              name="AuthStack"
+              component={AuthStack}
+              options={{headerShown: false}}
+            />
+          )
         ) : (
           <Stack.Screen
-            name="AppStack"
-            component={AppStack}
+            name="OfflineScreen"
+            component={OfflineScreen}
             options={{headerShown: false}}
           />
         )}

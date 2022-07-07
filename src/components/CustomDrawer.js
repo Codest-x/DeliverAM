@@ -2,24 +2,21 @@ import {
   StyleSheet,
   View,
   Image,
-  TouchableWithoutFeedback,
   Text,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
 import MenuButton from './ButtonMenu';
-import {useNavigation} from '@react-navigation/native';
-//import {useAuth} from '../providers/auth';
 import {theme} from '../constants/theme';
 import {useAuth} from '../contexts/auth';
 
 export default function CustomDrawer(props) {
-  const {authData, loading} = useAuth();
+  const {authData} = useAuth();
   const auth = useAuth();
 
   const getFirstFromName = fullname => {
@@ -30,9 +27,9 @@ export default function CustomDrawer(props) {
     <View style={styles.DrawerContainer}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{backgroundColor: '#fff'}}>
-        <ImageBackground
-          source={require('../assets/images/menu-bg.png')}
+        contentContainerStyle={{backgroundColor: theme.colors.accentColor}}>
+        <View
+          /* source={require('../assets/images/menu-bg.png')} */
           style={styles.UserContainer}>
           <TouchableOpacity
             onPress={() => {
@@ -62,15 +59,19 @@ export default function CustomDrawer(props) {
                 alignItems: 'center',
               }}>
               <Text style={styles.UserName}>
-                {authData?.user ? getFirstFromName(authData?.user?.nombres) : ''}
+                {authData?.user
+                  ? getFirstFromName(authData?.user?.nombres)
+                  : ''}
               </Text>
               <Text style={styles.UserNameRight}>
-                {authData?.user ? getFirstFromName(authData?.user?.apellidos) : ''}
+                {authData?.user
+                  ? getFirstFromName(authData?.user?.apellidos)
+                  : ''}
               </Text>
             </View>
             <Text style={styles.UserPhone}>{authData?.user?.telefono}</Text>
           </View>
-        </ImageBackground>
+        </View>
         <View style={styles.MenuContainer}>
           <DrawerItemList {...props} />
           {/* <View style={styles.menuButtons}>

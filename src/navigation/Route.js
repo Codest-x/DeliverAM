@@ -13,7 +13,7 @@ import NetInfo from '@react-native-community/netinfo';
 export default function Routes() {
   const Stack = createStackNavigator();
   const {authData, loading} = useAuth();
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
 
   NetInfo.fetch().then(state => {
     setIsConnected(state.isConnected);

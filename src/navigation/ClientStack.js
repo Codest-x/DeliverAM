@@ -14,7 +14,7 @@ export default function ClientStack(Drawer) {
                 height: 0,
               }, */
           drawerIcon: ({color}) => (
-            <Icon name={'home-outline'} size={24} color={color} />
+            <Icon name={'home'} size={24} color={color} />
           ),
         }}
       />

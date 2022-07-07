@@ -6,8 +6,6 @@ import {enableLatestRenderer} from 'react-native-maps';
 
 enableLatestRenderer();
 
-// api key google maps  AIzaSyAjww-YnvLqmT-W4NWS-2OvpGa56CIHrcM
-
 export default function App() {
   return (
     <AuthProvider>

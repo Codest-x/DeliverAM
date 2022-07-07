@@ -1,4 +1,4 @@
-package com.codestx.deliveryapp.newarchitecture.components;
+package com.codestx.deliveram.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

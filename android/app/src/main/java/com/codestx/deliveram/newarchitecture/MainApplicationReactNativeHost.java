@@ -1,4 +1,4 @@
-package com.codestx.deliveryapp.newarchitecture;
+package com.codestx.deliveram.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.codestx.deliveryapp.BuildConfig;
-import com.codestx.deliveryapp.newarchitecture.components.MainComponentsRegistry;
-import com.codestx.deliveryapp.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.codestx.deliveram.BuildConfig;
+import com.codestx.deliveram.newarchitecture.components.MainComponentsRegistry;
+import com.codestx.deliveram.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

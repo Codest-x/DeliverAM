@@ -1,4 +1,4 @@
-package com.codestx.deliveryapp.newarchitecture.modules;
+package com.codestx.deliveram.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

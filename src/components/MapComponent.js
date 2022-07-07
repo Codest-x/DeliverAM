@@ -23,21 +23,25 @@ export default function MapComponent({domiciliaryMarkers}) {
       mapType="standard"
       showsUserLocation={false}
       style={{width: '100%', height: 400}}>
-      {domiciliaryMarkers.map(marker => (
-        <Marker
-          key={marker._id}
-          title={`${getFirstFromName(
-            marker?.domiciliary?.nombres,
-          )} ${getFirstFromName(marker?.domiciliary?.apellidos)}`}
-          description={getTimeDifference(marker?.updatedAt)}
-          coordinate={{
-            latitude: marker?.lat,
-            longitude: marker?.long,
-          }}
-          pinColor={'orange'}
-          icon={require('../assets/images/repartidor.png')}
-        />
-      ))}
+      {domiciliaryMarkers.map(
+        marker =>
+          marker.lat &&
+          marker.long && (
+            <Marker
+              key={marker._id}
+              title={`${getFirstFromName(
+                marker?.domiciliary?.nombres,
+              )} ${getFirstFromName(marker?.domiciliary?.apellidos)}`}
+              description={getTimeDifference(marker?.updatedAt)}
+              coordinate={{
+                latitude: marker?.lat,
+                longitude: marker?.long,
+              }}
+              pinColor={'orange'}
+              icon={require('../assets/images/repartidor.png')}
+            />
+          ),
+      )}
     </MapView>
   );
 }

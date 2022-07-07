@@ -39,9 +39,9 @@ export default function CustomDrawer(props) {
               source={
                 authData?.user
                   ? authData?.user?.picture === ''
-                    ? require('../assets/images/default-profilepic.png')
+                    ? require('../assets/images/default-profilepic.jpg')
                     : {uri: authData?.user?.picture}
-                  : require('../assets/images/default-profilepic.png')
+                  : require('../assets/images/default-profilepic.jpg')
               }
               style={{
                 width: 80,

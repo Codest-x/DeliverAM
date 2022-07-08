@@ -1,4 +1,5 @@
 export const API_URL = 'https://deliveram-api.herokuapp.com';
+// LOCAL_URL = 'http://192.168.201.4:4000';
 
 export const getApiUrl = endpoint => {
   return `${API_URL}${endpoint}`;

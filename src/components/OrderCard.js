@@ -1,6 +1,14 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from 'react-native';
 import React from 'react';
 import {theme} from '../constants/theme';
+
+const {width, height} = Dimensions.get('window');
 
 export default function OrderCard({data, children}) {
   return (
@@ -53,7 +61,7 @@ export default function OrderCard({data, children}) {
 
 const styles = StyleSheet.create({
   CardOrder: {
-    width: '95%',
+    width: width - 20,
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#fff',

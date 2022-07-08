@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Image,
   Text,
+  Dimensions,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {theme} from '../../constants/theme';
@@ -24,7 +25,8 @@ export default function HomeC({navigation}) {
   const [loading, setLoading] = useState(false);
 
   const {authData} = useAuth();
-  const {newOrder, deleteOrder} = useSocketIO();
+  const {newOrder, deleteOrder, newUbication} = useSocketIO();
+  const {height} = Dimensions.get('window');
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -40,9 +42,6 @@ export default function HomeC({navigation}) {
 
   useEffect(() => {
     setLoading(true);
-    getAllDomiciliaryUbications().then(ubications => {
-      setMarkers(ubications);
-    });
     getOrdersFromUser(authData?.user?._id).then(({orders}) => {
       if (orders.length > 3) {
         setOrders(orders.slice(0, 3));
@@ -53,9 +52,18 @@ export default function HomeC({navigation}) {
     });
   }, [newOrder, deleteOrder]);
 
+  useEffect(() => {
+    getAllDomiciliaryUbications().then(ubications => {
+      setMarkers(ubications);
+    });
+  }, [newUbication]);
+
   return (
     <SafeAreaView style={styles.HomeContainer}>
-      <MapComponent domiciliaryMarkers={domiciliaryMarkers} />
+      <MapComponent
+        domiciliaryMarkers={domiciliaryMarkers}
+        height={orders.length >= 3 ? height * 0.5 : height * 0.6}
+      />
       <ScrollView
         contentContainerStyle={styles.HomeScroll}
         refreshControl={
@@ -68,8 +76,32 @@ export default function HomeC({navigation}) {
         }>
         <View style={styles.OrdersContainer}>
           {!loading && !refreshing ? (
-            orders &&
-            orders.map(order => <OrderCard key={order._id} data={order} />)
+            orders.length > 0 ? (
+              orders.map(order => <OrderCard key={order._id} data={order} />)
+            ) : (
+              <View style={styles.LoadinContainer}>
+                <Image
+                  source={require('../../assets/images/dont-move.gif')}
+                  style={{
+                    width: 300,
+                    height: 300,
+                    resizeMode: 'contain',
+                    marginBottom: -60,
+                  }}
+                />
+                <Text
+                  style={{
+                    color: 'black',
+                    fontWeight: 'bold',
+                    paddingVertical: 10,
+                    fontSize: 20,
+                    width: '90%',
+                    textAlign: 'center',
+                  }}>
+                  No tienes ordenes
+                </Text>
+              </View>
+            )
           ) : (
             <View style={styles.LoadinContainer}>
               <Image

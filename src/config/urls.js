@@ -1,5 +1,6 @@
-export const API_URL = 'https://deliveram-api.herokuapp.com';
+export const API_URL = 'http://192.168.201.4:4000';
 // LOCAL_URL = 'http://192.168.201.4:4000';
+// API_URL = 'https://deliveram-api.herokuapp.com';
 
 export const getApiUrl = endpoint => {
   return `${API_URL}${endpoint}`;
@@ -15,6 +16,7 @@ export const USER_BY_TOKEN = getApiUrl('/auth');
 
 export const GET_ORDERS_BY_USER = getApiUrl('/orders/client/');
 export const ADD_ORDER = getApiUrl('/orders');
+export const DELETE_ORDER = getApiUrl('/orders/');
 
 /* Auth Ubication */
 

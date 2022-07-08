@@ -10,7 +10,17 @@ import {theme} from '../constants/theme';
 
 const {width, height} = Dimensions.get('window');
 
-export default function OrderCard({data, children}) {
+export default function OrderCard({data, children, actionButtons}) {
+  const getKValue = value => {
+    if (value < 1000) {
+      return value;
+    } else if (value < 1000000) {
+      return `${(value / 1000).toFixed(1)}K`;
+    } else {
+      return `${(value / 1000000).toFixed(2)}M`;
+    }
+  };
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -38,15 +48,21 @@ export default function OrderCard({data, children}) {
       {children}
       <Text style={styles.Petition}>{data.petition}</Text>
       <View style={styles.Oferts}>
-        <View style={[styles.OfertPrice, {marginRight: 10}]}>
+        <View
+          style={[
+            styles.OfertPrice,
+            {marginRight: data?.domiciliaryofert != 0 ? 10 : 0},
+          ]}>
           <Text style={styles.OfertTitle}>Oferta Cliente:</Text>
-          <Text style={styles.Text}>{data.clientofert}</Text>
+          <Text style={styles.Text}>{getKValue(data.clientofert)}</Text>
         </View>
 
-        <View style={styles.OfertPrice}>
-          <Text style={styles.OfertTitle}>Oferta Domiciliario:</Text>
-          <Text style={styles.Text}>{data.domiciliaryofert}</Text>
-        </View>
+        {data?.domiciliaryofert != 0 && (
+          <View style={styles.OfertPrice}>
+            <Text style={styles.OfertTitle}>Oferta Domiciliario:</Text>
+            <Text style={styles.Text}>{getKValue(data.domiciliaryofert)}</Text>
+          </View>
+        )}
       </View>
       <View style={styles.OrderDetails}>
         <View style={styles.OrderStatus}>
@@ -55,6 +71,7 @@ export default function OrderCard({data, children}) {
         </View>
         <Text style={styles.Text}>Orden Id: {data._id}</Text>
       </View>
+      {actionButtons}
     </TouchableOpacity>
   );
 }
@@ -109,6 +126,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-end',
+    marginBottom: 10,
   },
   OrderStatus: {
     display: 'flex',

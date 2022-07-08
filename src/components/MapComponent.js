@@ -21,6 +21,7 @@ export default function MapComponent({domiciliaryMarkers, height}) {
       loadingIndicatorColor={theme.colors.accentColor}
       mapType="standard"
       showsUserLocation={false}
+      moveOnMarkerPress={true}
       style={{width: '100%', height: height || 400}}>
       {domiciliaryMarkers.map(
         marker =>
@@ -37,7 +38,7 @@ export default function MapComponent({domiciliaryMarkers, height}) {
                 longitude: marker?.long,
               }}
               pinColor={'orange'}
-              icon={require('../assets/images/repartidor.png')}
+              /* icon={require('../assets/images/repartidor.png')} */
             />
           ),
       )}

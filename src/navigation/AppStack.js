@@ -4,6 +4,7 @@ import CustomDrawer from '../components/CustomDrawer';
 import {useAuth} from '../contexts/auth';
 import ClientStack from './ClientStack';
 import DomiciliaryStack from './DomiciliaryStack';
+import {theme} from '../constants/theme';
 
 export default function AppStack() {
   const {authData} = useAuth();
@@ -17,10 +18,12 @@ export default function AppStack() {
       drawerContent={props => <CustomDrawer {...props} />}
       screenOptions={{
         headerShown: false,
-        drawerActiveBackgroundColor: '#ececec',
-        drawerActiveTintColor: '#000',
-        drawerInactiveBackgroundColor: '#fff',
+        drawerActiveBackgroundColor: theme.colors.accentColor,
+        drawerActiveTintColor: theme.colors.primaryColor,
+        drawerInactiveBackgroundColor: theme.colors.secondaryColor,
         drawerInactiveTintColor: '#000',
+        swipeMinDistance: 50,
+        swipeEdgeWidth: 50,
         drawerLabelStyle: {
           fontSize: 16,
           fontWeight: 'bold',

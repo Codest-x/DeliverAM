@@ -1,17 +1,9 @@
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import MenuButton from './ButtonMenu';
 import {theme} from '../constants/theme';
 import {useAuth} from '../contexts/auth';
 
@@ -96,7 +88,7 @@ export default function CustomDrawer(props) {
             style={{
               fontSize: 18,
               fontWeight: 'bold',
-              color: theme.colors.primaryColor,
+              color: theme.colors.secondaryTextColor,
             }}>
             Cerrar Sesion
           </Text>
@@ -149,7 +141,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    backgroundColor: 'white',
     paddingVertical: 10,
   },
   LogOutButton: {
@@ -164,7 +155,7 @@ const styles = StyleSheet.create({
     marginBottom: -10,
   },
   FooterText: {
-    color: 'black',
+    color: theme.colors.primaryTextColor,
     fontSize: 14,
     marginBottom: 10,
   },

@@ -1,10 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import {theme} from '../constants/theme';
 import {getTimeDifference} from '../utils/helperFunctions';
 
-export default function MapComponent({domiciliaryMarkers}) {
+export default function MapComponent({domiciliaryMarkers, height}) {
   const getFirstFromName = fullname => {
     return fullname.split(' ')[0];
   };
@@ -22,7 +21,7 @@ export default function MapComponent({domiciliaryMarkers}) {
       loadingIndicatorColor={theme.colors.accentColor}
       mapType="standard"
       showsUserLocation={false}
-      style={{width: '100%', height: 400}}>
+      style={{width: '100%', height: height || 400}}>
       {domiciliaryMarkers.map(
         marker =>
           marker.lat &&

@@ -15,6 +15,9 @@ import {theme} from '../../constants/theme';
 import {getOrdersFromUser} from '../../services/ordersService';
 import {useAuth} from '../../contexts/auth';
 import {useSocketIO} from '../../contexts/socketio';
+import OrderActionsButtons from '../../components/OrderActionsButtons';
+import {deleteOrderService} from '../../services/ordersService';
+import {showError, showSuccess} from '../../utils/helperFunctions';
 
 export default function ViewOrders() {
   const [refreshing, setRefreshing] = useState(false);
@@ -54,8 +57,59 @@ export default function ViewOrders() {
         }>
         {!loading && !refreshing ? (
           <View style={styles.OrdersContent}>
-            {orders &&
-              orders.map(order => <OrderCard key={order._id} data={order} />)}
+            {orders.length > 0 ? (
+              orders.map(order => (
+                <OrderCard
+                  key={order._id}
+                  data={order}
+                  actionButtons={
+                    <OrderActionsButtons
+                      leftText="Editar"
+                      rightText="Eliminar"
+                      onPressLeft={() => {
+                        console.log('Editar', order._id);
+                      }}
+                      onPressRight={() => {
+                        deleteOrderService(order._id, authData?.token)
+                          .then(() => {
+                            showSuccess('Orden eliminada');
+                          })
+                          .catch(error => {
+                            showError(
+                              'Error al eliminar',
+                              error.response.data.error,
+                            );
+                          });
+                        console.log('Eliminar', order._id);
+                      }}
+                    />
+                  }
+                />
+              ))
+            ) : (
+              <View style={styles.LoadinContainer}>
+                <Image
+                  source={require('../../assets/images/dont-move.gif')}
+                  style={{
+                    width: 300,
+                    height: 300,
+                    resizeMode: 'contain',
+                    marginBottom: -60,
+                  }}
+                />
+                <Text
+                  style={{
+                    color: 'black',
+                    fontWeight: 'bold',
+                    paddingVertical: 10,
+                    fontSize: 20,
+                    width: '90%',
+                    textAlign: 'center',
+                  }}>
+                  No tienes ordenes
+                </Text>
+              </View>
+            )}
           </View>
         ) : (
           <View style={styles.LoadinContainer}>

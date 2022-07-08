@@ -37,12 +37,15 @@ const LocationProvider = ({children}) => {
           },
           error => {
             // See error code charts below.
-            showError('Error Ubicación', error.message);
+            showError(
+              'Error Ubicación',
+              'No hemos podido acceder a tu ubicación',
+            );
           },
           {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
         );
       } else {
-        showError('Error Ubicación', 'No hemos podido enviar tu ubicación');
+        showError('Error Ubicación', 'No hemos podido acceder a tu ubicación');
       }
     } catch (err) {
       console.warn(err);

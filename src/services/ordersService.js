@@ -32,4 +32,13 @@ const addOrder = async (order, token) => {
   return response.data;
 };
 
-export {getOrdersFromUser, addOrder};
+const deleteOrderService = async (orderId, token) => {
+  const response = await axios.delete(`${api.DELETE_ORDER}${orderId}`, {
+    headers: {
+      'x-access-token': token,
+    },
+  });
+  return response.data;
+};
+
+export {getOrdersFromUser, addOrder, deleteOrderService};

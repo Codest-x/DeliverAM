@@ -7,7 +7,6 @@ import {
   TextInput,
   StatusBar,
   TouchableOpacity,
-  KeyboardAvoidingView,
 } from 'react-native';
 import React, {useState} from 'react';
 import {theme} from '../../constants/theme';
@@ -53,35 +52,30 @@ export default function AddOrder() {
 
   return (
     <SafeAreaView style={styles.AddOrderContainer}>
-      <KeyboardAvoidingView behavior="height">
-        <View style={styles.AddOrderContent}>
-          <View style={styles.AddOrderForm}>
-            <Text style={styles.PetitionTitle}>Ingrese su petición</Text>
-            <TextInput
-              value={petition}
-              placeholder="Ingrese la petición"
-              onChangeText={petition => updateState({petition})}
-              style={styles.PetitionContainer}
-              placeholderTextColor="gray"
-              multiline={true}
-            />
-            <Text style={styles.PetitionTitle}>
-              Ingrese cuanto desea ofertar
-            </Text>
-            <TextInput
-              value={clientofert}
-              placeholder="Ingrese cuanto desea ofertar"
-              onChangeText={clientofert => updateState({clientofert})}
-              style={styles.InputStyle}
-              placeholderTextColor="gray"
-              keyboardType="numeric"
-            />
-          </View>
-          <TouchableOpacity style={styles.AddOrderButton} onPress={createOrder}>
-            <Text style={styles.AddOrderButtonText}>Agregar Orden</Text>
-          </TouchableOpacity>
+      <View style={styles.AddOrderContent}>
+        <View style={styles.AddOrderForm}>
+          <Text style={styles.PetitionTitle}>Ingrese su petición</Text>
+          <TextInput
+            value={petition}
+            placeholder="Ingrese la petición"
+            onChangeText={petition => updateState({petition})}
+            style={styles.PetitionContainer}
+            placeholderTextColor="gray"
+          />
+          <Text style={styles.PetitionTitle}>Ingrese cuanto desea ofertar</Text>
+          <TextInput
+            value={clientofert}
+            placeholder="Ingrese cuanto desea ofertar"
+            onChangeText={clientofert => updateState({clientofert})}
+            style={styles.InputStyle}
+            placeholderTextColor="gray"
+            keyboardType="numeric"
+          />
         </View>
-      </KeyboardAvoidingView>
+        <TouchableOpacity style={styles.AddOrderButton} onPress={createOrder}>
+          <Text style={styles.AddOrderButtonText}>Agregar Orden</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -100,7 +94,7 @@ const styles = StyleSheet.create({
     width: width,
     height: height,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     display: 'flex',
     flexDirection: 'column',
     marginTop: StatusBar.currentHeight,
@@ -112,7 +106,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     paddingHorizontal: 20,
-    paddingTop: 20,
   },
   InputStyle: {
     width: '100%',
@@ -144,7 +137,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   AddOrderButton: {
-    width: width,
+    width: '90%',
     height: 50,
     backgroundColor: theme.colors.accentColor,
     borderRadius: 10,

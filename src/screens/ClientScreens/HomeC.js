@@ -65,51 +65,37 @@ export default function HomeC({navigation}) {
           />
         }>
         <View style={styles.OrdersContainer}>
-          {orders.length > 0 ? (
-            !loading && !refreshing ? (
-              orders &&
-              orders.map(order => <OrderCard key={order._id} data={order} />)
-            ) : (
-              <View style={styles.LoadinContainer}>
-                <Image
-                  source={require('../../assets/images/dont-move.gif')}
-                  style={{
-                    width: 300,
-                    height: 300,
-                    resizeMode: 'contain',
-                    marginBottom: -60,
-                  }}
-                />
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    paddingVertical: 10,
-                    fontSize: 20,
-                    width: '90%',
-                    textAlign: 'center',
-                  }}>
-                  Estamos cargando tus ordenes se paciente si se demora en
-                  cargar mas de lo normal reinicia la aplicación
-                </Text>
-                <ActivityIndicator
-                  size="large"
-                  color={theme.colors.accentColor}
-                />
-              </View>
-            )
+          {!loading && !refreshing ? (
+            orders &&
+            orders.map(order => <OrderCard key={order._id} data={order} />)
           ) : (
-            <Text
-              style={{
-                color: 'black',
-                fontWeight: 'bold',
-                paddingVertical: 10,
-                fontSize: 20,
-                width: '90%',
-                textAlign: 'center',
-              }}>
-              Parece que no tienes ordenes
-            </Text>
+            <View style={styles.LoadinContainer}>
+              <Image
+                source={require('../../assets/images/dont-move.gif')}
+                style={{
+                  width: 300,
+                  height: 300,
+                  resizeMode: 'contain',
+                  marginBottom: -60,
+                }}
+              />
+              <Text
+                style={{
+                  color: 'black',
+                  fontWeight: 'bold',
+                  paddingVertical: 10,
+                  fontSize: 20,
+                  width: '90%',
+                  textAlign: 'center',
+                }}>
+                Estamos cargando tus ordenes se paciente si se demora en cargar
+                mas de lo normal reinicia la aplicación
+              </Text>
+              <ActivityIndicator
+                size="large"
+                color={theme.colors.accentColor}
+              />
+            </View>
           )}
         </View>
       </ScrollView>

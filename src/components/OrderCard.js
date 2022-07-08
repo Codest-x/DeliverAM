@@ -37,7 +37,7 @@ export default function OrderCard({data, children}) {
 
         <View style={styles.OfertPrice}>
           <Text style={styles.OfertTitle}>Oferta Domiciliario:</Text>
-          <Text style={styles.Text}>{data.clientofert}</Text>
+          <Text style={styles.Text}>{data.domiciliaryofert}</Text>
         </View>
       </View>
       <View style={styles.OrderDetails}>

@@ -15,21 +15,24 @@ export default function HomeD() {
   }, []);
 
   const sendUserUbicationAsync = async () => {
-    sendUserUbication({
-      userId: authData?.user?._id,
-      latitude: locationData?.latitude,
-      longitude: locationData?.longitude,
-      token: authData?.token,
-    })
-      .then(() => {
-        showSuccess('Oye!', 'Hemos actualizado tu ubicación');
-      })
-      .catch(error => {
-        showError(
-          'Error Ubicación',
-          error.response.data.error || 'No hemos podido enviar tu ubicación',
-        );
-      });
+    locationData?.latitude && locationData?.longitude
+      ? sendUserUbication({
+          userId: authData?.user?._id,
+          latitude: locationData?.latitude,
+          longitude: locationData?.longitude,
+          token: authData?.token,
+        })
+          .then(() => {
+            showSuccess('Oye!', 'Hemos actualizado tu ubicación');
+          })
+          .catch(error => {
+            showError(
+              'Error Ubicación',
+              error.response.data.error ||
+                'No hemos podido enviar tu ubicación',
+            );
+          })
+      : showError('Error Ubicación', 'No hemos podido enviar tu ubicación');
   };
 
   return (

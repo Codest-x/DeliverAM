@@ -14,6 +14,7 @@ import OrderCard from '../../components/OrderCard';
 import {theme} from '../../constants/theme';
 import {getOrdersFromUser} from '../../services/ordersService';
 import {useAuth} from '../../contexts/auth';
+import {useSocketIO} from '../../contexts/socketio';
 
 export default function ViewOrders() {
   const [refreshing, setRefreshing] = useState(false);
@@ -21,6 +22,7 @@ export default function ViewOrders() {
   const [orders, SetOrders] = useState([]);
 
   const {authData} = useAuth();
+  const {newOrder, deleteOrder} = useSocketIO();
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -36,7 +38,7 @@ export default function ViewOrders() {
       SetOrders(orders);
       setLoading(false);
     });
-  }, []);
+  }, [newOrder, deleteOrder]);
 
   return (
     <SafeAreaView style={styles.OrdersContainer}>

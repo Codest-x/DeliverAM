@@ -15,6 +15,7 @@ import MapComponent from '../../components/MapComponent';
 import {getAllDomiciliaryUbications} from '../../services/clientService';
 import {getOrdersFromUser} from '../../services/ordersService';
 import {useAuth} from '../../contexts/auth';
+import {useSocketIO} from '../../contexts/socketio';
 
 export default function HomeC({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
@@ -23,6 +24,7 @@ export default function HomeC({navigation}) {
   const [loading, setLoading] = useState(false);
 
   const {authData} = useAuth();
+  const {newOrder, deleteOrder} = useSocketIO();
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -49,7 +51,7 @@ export default function HomeC({navigation}) {
       }
       setLoading(false);
     });
-  }, []);
+  }, [newOrder, deleteOrder]);
 
   return (
     <SafeAreaView style={styles.HomeContainer}>

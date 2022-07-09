@@ -29,7 +29,7 @@ export default function Login({navigation}) {
 
   const onLogin = async () => {
     updateState({isLoading: true});
-    await auth.signIn(email, password);
+    await auth.signIn(email.toLowerCase(), password);
     updateState({isLoading: false});
   };
 
@@ -74,6 +74,7 @@ export default function Login({navigation}) {
           style={styles.InputStyle}
           placeholderTextColor="gray"
           textContentType="emailAddress"
+          autoCapitalize="none"
         />
         <View style={{width: '100%'}}>
           <TextInput

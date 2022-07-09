@@ -11,8 +11,8 @@ export default function HomeD() {
   const {locationData} = useLocation();
 
   useEffect(() => {
-    !loading && authData && sendUserUbicationAsync();
-  }, []);
+    !loading && authData && locationData && sendUserUbicationAsync();
+  }, [locationData]);
 
   const sendUserUbicationAsync = async () => {
     locationData?.latitude && locationData?.longitude

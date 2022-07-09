@@ -18,15 +18,17 @@ const LocationProvider = ({children}) => {
 
   async function getUserLocationPermissions() {
     try {
-      const granted = await PermissionsAndroid.request(
+      const grantedFineLocation = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: 'DeliverAM App',
-          message: 'Necesitamos Aceder a tu ubicacion',
+          title: 'DeliverAM App Necesita Acceder a tu ubicación',
+          message:
+            'Necesitamos Aceder a tu ubicacion para que los clientes vean donde estas' +
+            ' y asi poder requerir tu servicio de una mejor manera',
         },
       );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the location');
+
+      if (grantedFineLocation === PermissionsAndroid.RESULTS.GRANTED) {
         Geolocation.getCurrentPosition(
           position => {
             setLocation(position.coords);
@@ -37,15 +39,12 @@ const LocationProvider = ({children}) => {
           },
           error => {
             // See error code charts below.
-            showError(
-              'Error Ubicación',
-              'No hemos podido acceder a tu ubicación',
-            );
+            showError('Error', 'No hemos podido acceder a tu ubicación');
           },
           {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
         );
       } else {
-        showError('Error Ubicación', 'No hemos podido acceder a tu ubicación');
+        showError('Error Ubicación Precisa', 'No se enviara tu ubicación');
       }
     } catch (err) {
       console.warn(err);

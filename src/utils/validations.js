@@ -32,41 +32,35 @@ const checkEmpty = (val, type) => {
 
 const checkMinLengthPwd = (val, minLength) => {
   if (val.trim().length < minLength) {
-    showError(
-      'Contraseña Debil',
-      'Porfavore ingrese una contraseña de al menos 8 caracteres',
-    );
+    throw new Error('Contraseña Muy Corta');
   } else {
-    return '';
+    return true;
   }
 };
 
-export default function (data) {
-  const {email, password} = data;
+function ValidateEmail(email) {
+  var validRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-  if (email !== undefined) {
-    let emptyValidationText = checkEmpty(email, 'email');
-    if (emptyValidationText !== '') {
-      return emptyValidationText;
-    } else {
-      if (!validator.email(email)) {
-        showError(
-          'Correo Electrónico Invalido',
-          'Porfavor ingrese un correo electrónico valido',
-        );
-      }
-    }
+  if (email.match(validRegex)) {
+    return true;
+  } else {
+    throw new Error('Correo Electrónico Invalido');
   }
+}
 
-  if (password !== undefined) {
-    let emptyValidationText = checkEmpty(password, 'password');
-    if (emptyValidationText !== '') {
-      return emptyValidationText;
-    } else {
-      let minLengthValidation = checkMinLengthPwd(password, 8);
-      if (minLengthValidation !== '') {
-        return minLengthValidation;
-      }
-    }
+export default function (data) {
+  try {
+    const {email, password} = data;
+
+    const isValidEmail = ValidateEmail(email);
+    const isValidPassword = checkMinLengthPwd(password, 8);
+
+    if (isValidEmail && isValidPassword) return true;
+
+    return false;
+  } catch (error) {
+    showError(error.name, error.message);
+    return false;
   }
 }

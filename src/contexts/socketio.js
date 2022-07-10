@@ -11,6 +11,8 @@ const SocketProvider = ({children}) => {
   const [newOrder, setNewOrder] = useState();
   const [deleteOrder, setDeleteOrder] = useState();
   const [newUbication, setNewUbication] = useState();
+  const [orderUpdated, setOrderUpdated] = useState();
+  const [orderAccepted, setOrderAccepted] = useState();
 
   socket.on('orderSaved', data => {
     setNewOrder(data ? data : null);
@@ -24,6 +26,10 @@ const SocketProvider = ({children}) => {
     setNewUbication(data ? data : null);
   });
 
+  socket.on('orderAccepted', data => {
+    setOrderAccepted(data ? data : null);
+  });
+
   return (
     //This component will be used to encapsulate the whole App,
     //so all components will have access to the Context
@@ -32,6 +38,7 @@ const SocketProvider = ({children}) => {
         newOrder,
         deleteOrder,
         newUbication,
+        orderAccepted,
       }}>
       {children}
     </SocketContext.Provider>

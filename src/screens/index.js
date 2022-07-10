@@ -6,9 +6,10 @@ import SignUpType from './SignUp/SignUpType';
 import OnboardingScreen from './OnBoarding/OnBoarding';
 import LoadingScreen from './LoadingScreen';
 import OfflineScreen from './OfflineScreen';
-import ViewOrders from './ClientScreens/ViewOrders';
+import ViewOrdersC from './ClientScreens/ViewOrdersC';
 import AddOrder from './ClientScreens/AddOrder';
-import OrderPage from './Order/OrderPage';
+import OrderPageD from './Orders/OrderPageD';
+import ViewOrdersD from './DomiciliaryScreens/ViewOrdersD';
 
 export {
   HomeC,
@@ -19,7 +20,8 @@ export {
   OnboardingScreen,
   OfflineScreen,
   LoadingScreen,
-  ViewOrders,
+  ViewOrdersC,
   AddOrder,
-  OrderPage,
+  OrderPageD,
+  ViewOrdersD,
 };

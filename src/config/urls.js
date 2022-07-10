@@ -17,6 +17,8 @@ export const USER_BY_TOKEN = getApiUrl('/auth');
 export const GET_ORDERS_BY_USER = getApiUrl('/orders/client/');
 export const ADD_ORDER = getApiUrl('/orders');
 export const DELETE_ORDER = getApiUrl('/orders/');
+export const GET_ALL_ORDERS = getApiUrl('/orders');
+export const GET_ORDER_BY_ID = getApiUrl('/orders/');
 
 /* Auth Ubication */
 

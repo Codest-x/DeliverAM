@@ -8,13 +8,27 @@ import {
 import {theme} from '../constants/theme';
 
 // create a component
-export default function ButtonWithLoader({isLoading, text, onPress}) {
+export default function ButtonWithLoader({
+  isLoading,
+  text,
+  onPress,
+  style,
+  textColor,
+}) {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.BtnStyle}>
+    <TouchableOpacity onPress={onPress} style={[styles.BtnStyle, style]}>
       {!!isLoading ? (
         <ActivityIndicator size="large" color="white" />
       ) : (
-        <Text style={styles.TextStyle}>{text}</Text>
+        <Text
+          style={[
+            styles.TextStyle,
+            {
+              color: textColor ? textColor : theme.colors.primaryColor,
+            },
+          ]}>
+          {text}
+        </Text>
       )}
     </TouchableOpacity>
   );
@@ -25,16 +39,15 @@ const styles = StyleSheet.create({
   BtnStyle: {
     height: 50,
     width: '100%',
-    backgroundColor: theme.colors.accentColor,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
     paddingHorizontal: 16,
+    backgroundColor: theme.colors.accentColor,
   },
   TextStyle: {
     fontSize: 16,
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    color: 'white',
   },
 });

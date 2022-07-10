@@ -29,9 +29,13 @@ export default function MapComponent({domiciliaryMarkers, height}) {
           marker.long && (
             <Marker
               key={marker._id}
-              title={`${getFirstFromName(
-                marker?.domiciliary?.nombres,
-              )} ${getFirstFromName(marker?.domiciliary?.apellidos)}`}
+              title={
+                marker?.domiciliary?.nombres && marker?.domiciliary?.apellidos
+                  ? `${getFirstFromName(
+                      marker?.domiciliary?.nombres,
+                    )} ${getFirstFromName(marker?.domiciliary?.apellidos)}`
+                  : 'Domiciliario'
+              }
               description={getTimeDifference(marker?.updatedAt)}
               coordinate={{
                 latitude: marker?.lat,

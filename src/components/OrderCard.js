@@ -8,9 +8,17 @@ import {
 import React from 'react';
 import {theme} from '../constants/theme';
 
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
-export default function OrderCard({data, children, actionButtons}) {
+TouchableOpacity.defaultProps = {activeOpacity: 0.8};
+
+export default function OrderCard({
+  data,
+  children,
+  actionButtons,
+  delivery,
+  onPress,
+}) {
   const getKValue = value => {
     if (value < 1000) {
       return value;
@@ -23,27 +31,29 @@ export default function OrderCard({data, children, actionButtons}) {
 
   return (
     <TouchableOpacity
-      onPress={() => {
-        console.log(data._id);
-      }}
+      onPress={onPress}
       style={[
         styles.CardOrder,
-        data.status === 'En Espera' && {
-          borderBottomColor: theme.colors.accentColor,
-          shadowColor: theme.colors.accentColor,
-        },
-        data.status === 'Pendiente' && {
-          borderBottomColor: 'red',
-          shadowColor: 'red',
-        },
-        data.status === 'Completado' && {
-          borderBottomColor: 'green',
-          shadowColor: 'green',
-        },
-        data.status === 'Cancelado' && {
-          borderBottomColor: 'gray',
-          shadowColor: 'gray',
-        },
+        data.status === 'En Espera' &&
+          !delivery && {
+            borderBottomColor: theme.colors.accentColor,
+            shadowColor: theme.colors.accentColor,
+          },
+        data.status === 'Pendiente' &&
+          !delivery && {
+            borderBottomColor: 'red',
+            shadowColor: 'red',
+          },
+        data.status === 'Completado' &&
+          !delivery && {
+            borderBottomColor: 'green',
+            shadowColor: 'green',
+          },
+        data.status === 'Cancelado' &&
+          !delivery && {
+            borderBottomColor: 'gray',
+            shadowColor: 'gray',
+          },
       ]}>
       {children}
       <Text style={styles.Petition}>{data.petition}</Text>

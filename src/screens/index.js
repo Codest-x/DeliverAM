@@ -8,6 +8,7 @@ import LoadingScreen from './LoadingScreen';
 import OfflineScreen from './OfflineScreen';
 import ViewOrders from './ClientScreens/ViewOrders';
 import AddOrder from './ClientScreens/AddOrder';
+import OrderPage from './Order/OrderPage';
 
 export {
   HomeC,
@@ -20,4 +21,5 @@ export {
   LoadingScreen,
   ViewOrders,
   AddOrder,
+  OrderPage,
 };

@@ -62,6 +62,9 @@ export default function ViewOrders() {
                 <OrderCard
                   key={order._id}
                   data={order}
+                  onPress={() => {
+                    console.log(order?._id);
+                  }}
                   actionButtons={
                     <OrderActionsButtons
                       leftText="Editar"

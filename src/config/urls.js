@@ -15,6 +15,7 @@ export const USER_BY_TOKEN = getApiUrl('/auth');
 /* Orders Service */
 
 export const GET_ORDERS_BY_USER = getApiUrl('/orders/client/');
+export const GET_ORDERS_BY_DOMICILIARY = getApiUrl('/orders/domiciliary/');
 export const ADD_ORDER = getApiUrl('/orders');
 export const DELETE_ORDER = getApiUrl('/orders/');
 export const GET_ALL_ORDERS = getApiUrl('/orders');
@@ -29,3 +30,7 @@ export const SEND_DOMICILIARY_UBICATION = getApiUrl(
 export const GET_DOMICILIARYS_UBICATIONS = getApiUrl(
   '/auth/domiciliary/ubications',
 );
+
+/* Domiciliary  */
+
+export const ACCEPT_ORDER = getApiUrl('/orders/domiciliary/');

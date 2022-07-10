@@ -1,5 +1,5 @@
 import React from 'react';
-import {HomeC, ViewOrders, AddOrder} from '../screens';
+import {HomeC, AddOrder, ViewOrdersC} from '../screens';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function ClientStack(Drawer) {
@@ -20,7 +20,7 @@ export default function ClientStack(Drawer) {
       />
       <Drawer.Screen
         name="Ver Ordenes"
-        component={ViewOrders}
+        component={ViewOrdersC}
         options={{
           headerShown: false,
           /* drawerItemStyle: {

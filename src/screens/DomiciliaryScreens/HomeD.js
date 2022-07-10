@@ -22,7 +22,7 @@ import OrderCard from '../../components/OrderCard';
 export default function HomeD({navigation}) {
   const {authData, loading} = useAuth();
   const {locationData} = useLocation();
-  const {newOrder, deleteOrder} = useSocketIO();
+  const {newOrder, deleteOrder, orderAccepted} = useSocketIO();
 
   const [orders, setOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -32,7 +32,7 @@ export default function HomeD({navigation}) {
     setRefreshing(true);
     getAllOrders()
       .then(orders => {
-        setOrders(orders);
+        setOrders(orders.filter(order => !order.domiciliary));
         setRefreshing(false);
       })
       .catch(err => {
@@ -48,13 +48,13 @@ export default function HomeD({navigation}) {
     setLoadingOrders(true);
     getAllOrders()
       .then(orders => {
-        setOrders(orders);
+        setOrders(orders.filter(order => !order.domiciliary));
         setLoadingOrders(false);
       })
       .catch(err => {
         showError('Error', err);
       });
-  }, [newOrder, deleteOrder]);
+  }, [newOrder, deleteOrder, orderAccepted]);
 
   const sendUserUbicationAsync = async () => {
     locationData?.latitude && locationData?.longitude
@@ -94,7 +94,7 @@ export default function HomeD({navigation}) {
             orders.length > 0 ? (
               orders.map(
                 order =>
-                  !order?.delivery && (
+                  !order?.domiciliary && (
                     <OrderCard
                       key={order._id}
                       data={order}
@@ -128,7 +128,7 @@ export default function HomeD({navigation}) {
                     width: '90%',
                     textAlign: 'center',
                   }}>
-                  No tienes ordenes
+                  No hay ordenes
                 </Text>
               </View>
             )

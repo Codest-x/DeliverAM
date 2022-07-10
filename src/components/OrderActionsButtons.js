@@ -15,17 +15,30 @@ export default function OrderActionsButtons({
         style={[
           styles.ButtonAction,
           {
-            backgroundColor: theme.colors.accentColor,
+            backgroundColor: 'transparent',
+            borderColor: theme.colors.accentColor,
+            borderWidth: 2,
+            padding: 8,
+            elevation: 0,
           },
         ]}>
-        <Text style={styles.TextAction}>{leftText || 'Editar'}</Text>
+        <Text
+          style={[
+            styles.TextAction,
+            {
+              color: theme.colors.accentColor,
+              fontWeight: 'bold',
+            },
+          ]}>
+          {leftText || 'Editar'}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={onPressRight}
         style={[
           styles.ButtonAction,
           {
-            backgroundColor: 'red',
+            backgroundColor: theme.colors.accentColor,
           },
         ]}>
         <Text style={styles.TextAction}>{rightText || 'Eliminar'}</Text>

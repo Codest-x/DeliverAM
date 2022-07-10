@@ -19,7 +19,7 @@ import OrderActionsButtons from '../../components/OrderActionsButtons';
 import {deleteOrderService} from '../../services/ordersService';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 
-export default function ViewOrders() {
+export default function ViewOrdersC() {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [orders, SetOrders] = useState([]);
@@ -29,18 +29,26 @@ export default function ViewOrders() {
 
   const onRefresh = () => {
     setRefreshing(true);
-    getOrdersFromUser(authData?.user?._id).then(({orders}) => {
-      SetOrders(orders);
-      setRefreshing(false);
-    });
+    getOrdersFromUser(authData?.user?._id)
+      .then(({orders}) => {
+        SetOrders(orders);
+        setRefreshing(false);
+      })
+      .catch(err => {
+        showError('Error Cargando Ordenes', err.response.data.error);
+      });
   };
 
   useEffect(() => {
     setLoading(true);
-    getOrdersFromUser(authData?.user?._id).then(({orders}) => {
-      SetOrders(orders);
-      setLoading(false);
-    });
+    getOrdersFromUser(authData?.user?._id)
+      .then(({orders}) => {
+        SetOrders(orders);
+        setLoading(false);
+      })
+      .catch(err => {
+        showError('Error Cargando Ordenes', err.response.data.error);
+      });
   }, [newOrder, deleteOrder]);
 
   return (

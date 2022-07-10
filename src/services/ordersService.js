@@ -6,6 +6,16 @@ const getOrdersFromUser = async userId => {
   return response.data;
 };
 
+const getAllOrders = async () => {
+  const response = await axios.get(api.GET_ALL_ORDERS);
+  return response.data.orders;
+};
+
+const getOrderById = async orderId => {
+  const response = await axios.get(`${api.GET_ORDER_BY_ID}${orderId}`);
+  return response.data.order;
+};
+
 const addOrder = async (order, token) => {
   const {petition, clientofert, client} = order;
 
@@ -41,4 +51,10 @@ const deleteOrderService = async (orderId, token) => {
   return response.data;
 };
 
-export {getOrdersFromUser, addOrder, deleteOrderService};
+export {
+  getOrdersFromUser,
+  addOrder,
+  deleteOrderService,
+  getAllOrders,
+  getOrderById,
+};

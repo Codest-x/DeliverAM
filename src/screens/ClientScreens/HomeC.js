@@ -77,7 +77,15 @@ export default function HomeC({navigation}) {
         <View style={styles.OrdersContainer}>
           {!loading && !refreshing ? (
             orders.length > 0 ? (
-              orders.map(order => <OrderCard key={order._id} data={order} />)
+              orders.map(order => (
+                <OrderCard
+                  key={order._id}
+                  data={order}
+                  onPress={() => {
+                    console.log(order?._id);
+                  }}
+                />
+              ))
             ) : (
               <View style={styles.LoadinContainer}>
                 <Image

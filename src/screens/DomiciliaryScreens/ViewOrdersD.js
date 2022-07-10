@@ -16,6 +16,7 @@ import {useAuth} from '../../contexts/auth';
 import {useSocketIO} from '../../contexts/socketio';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import {getOrdersFromDomiciliary} from '../../services/ordersService';
+import OrderActionsButtons from '../../components/OrderActionsButtons';
 
 export default function ViewOrdersD({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
@@ -73,6 +74,18 @@ export default function ViewOrdersD({navigation}) {
                       orderId: order?._id,
                     });
                   }}
+                  actionButtons={
+                    <OrderActionsButtons
+                      leftText="Cancelar"
+                      rightText="Terminar"
+                      onPressLeft={() => {
+                        console.log('Cancelar', order._id);
+                      }}
+                      onPressRight={() => {
+                        console.log('Eliminar', order._id);
+                      }}
+                    />
+                  }
                 />
               ))
             ) : (

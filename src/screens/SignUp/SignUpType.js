@@ -4,14 +4,22 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Button,
   ImageBackground,
   StatusBar,
+  Dimensions,
 } from 'react-native';
 import React from 'react';
 import {theme} from '../../constants/theme';
 
-const UserCardInfo = ({usertype, description, onPress}) => {
+const {width, height} = Dimensions.get('window');
+
+const UserCardInfo = ({
+  usertype,
+  description,
+  onPress,
+  onPressViewMore,
+  numberOfLines,
+}) => {
   return (
     <TouchableOpacity style={styles.UserCard} onPress={onPress}>
       <Image
@@ -24,13 +32,35 @@ const UserCardInfo = ({usertype, description, onPress}) => {
       />
       <View style={styles.UserInfo}>
         <Text style={styles.UserType}>{usertype}</Text>
-        <Text style={styles.UserDescription}>{description}</Text>
+        <Text numberOfLines={numberOfLines} style={styles.UserDescription}>
+          {description}
+        </Text>
       </View>
+      <TouchableOpacity
+        onPress={onPressViewMore}
+        style={{
+          position: 'absolute',
+          right: 10,
+          bottom: 10,
+        }}>
+        <Text
+          style={{
+            color: theme.colors.secondaryTextColor,
+            textDecorationLine: 'underline',
+            textDecorationStyle: 'solid',
+            fontWeight: 'bold',
+          }}>
+          Ver Mas
+        </Text>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };
 
 const SignUpType = ({navigation}) => {
+  const [showAllClient, setShowAllClient] = React.useState(false);
+  const [showAllDelivery, setShowAllDelivery] = React.useState(false);
+
   return (
     <ImageBackground
       style={styles.UserTypeContainer}
@@ -58,6 +88,8 @@ const SignUpType = ({navigation}) => {
         <UserCardInfo
           usertype="Cliente"
           onPress={() => navigation.navigate('SignUp', {usertype: 'Cliente'})}
+          onPressViewMore={() => setShowAllClient(!showAllClient)}
+          numberOfLines={showAllClient ? 0 : 4}
           description="Como cliente tendras las posibilidades de pedir domicilios, mirar el domiciliario mas cercano, ofrecer una cantidad de dinero en base a lo que necesites"
         />
         <UserCardInfo
@@ -65,6 +97,8 @@ const SignUpType = ({navigation}) => {
           onPress={() =>
             navigation.navigate('SignUp', {usertype: 'Domiciliario'})
           }
+          onPressViewMore={() => setShowAllDelivery(!showAllDelivery)}
+          numberOfLines={showAllDelivery ? 0 : 4}
           description="Como vendedor podras aceptar domicilios, ofertar una cantidad diferente a la del cliente en cada domicilio, los clientes podran saber tu ubicación para rastrear su pedido"
         />
         <Text

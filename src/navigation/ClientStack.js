@@ -1,5 +1,5 @@
 import React from 'react';
-import {HomeC, AddOrder, ViewOrdersC} from '../screens';
+import {HomeC, AddOrder, ViewOrdersC, OrderPageC} from '../screens';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function ClientStack(Drawer) {
@@ -42,6 +42,16 @@ export default function ClientStack(Drawer) {
           drawerIcon: ({color}) => (
             <Icon name={'add'} size={24} color={color} />
           ),
+        }}
+      />
+      <Drawer.Screen
+        name="Orden"
+        component={OrderPageC}
+        options={{
+          headerShown: false,
+          drawerItemStyle: {
+            height: 0,
+          },
         }}
       />
     </>

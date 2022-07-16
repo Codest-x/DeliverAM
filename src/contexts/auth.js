@@ -5,9 +5,13 @@ import {
   registerClientService,
   registerDomiciliaryService,
   getUserByToken,
+  getUserFMCToken,
+  getDomiciliaryFMCToken,
+  updateClientFMCToken,
+  updateDomiciliaryFMCToken,
 } from '../services/authService';
 import {showError, showSuccess} from '../utils/helperFunctions';
-
+import messaging, {firebase} from '@react-native-firebase/messaging';
 //Create the Auth Context to be used by the App
 
 const AuthContext = createContext();
@@ -35,6 +39,46 @@ const AuthProvider = ({children}) => {
         //If there are data, it's converted to an Object and the state is updated.
         const _authData = JSON.parse(authDataSerialized);
         setAuthData(_authData);
+
+        const userType = _authData?.user?.roles[0]?.name;
+
+        const token = await messaging().getToken();
+
+        if (userType === 'Cliente') {
+          getUserFMCToken(_authData.token, _authData.user._id).then(res => {
+            if (token !== res.data.fmcToken) {
+              updateClientFMCToken(
+                _authData.token,
+                _authData.user._id,
+                token,
+              ).then(res => {
+                if (token !== res.data.fmcToken) {
+                  updateClientFMCToken(
+                    _authData.token,
+                    _authData.user._id,
+                    token,
+                  );
+                }
+              });
+            }
+
+            return;
+          });
+        } else {
+          getDomiciliaryFMCToken(_authData.token, _authData.user._id).then(
+            res => {
+              if (token !== res.data.fmcToken) {
+                updateDomiciliaryFMCToken(
+                  _authData.token,
+                  _authData.user._id,
+                  token,
+                );
+              }
+
+              return;
+            },
+          );
+        }
       }
     } catch (error) {
       //If there are any errors, it's logged and the state is updated.
@@ -83,13 +127,18 @@ const AuthProvider = ({children}) => {
   const signUpAsClient = async data => {
     let errors = false;
 
-    await registerClientService(data)
-      .then(({data}) => {
-        console.log(data);
+    const tokenFMC = await messaging().getToken();
+
+    await registerClientService({
+      ...data,
+      fmcToken: tokenFMC,
+    })
+      .then(async ({data}) => {
         showSuccess(
           'Disfruta como cliente',
           'Usuario registrado correctamente',
         );
+        await messaging().registerDeviceForRemoteMessages();
         //signIn(data.email, data.password);
       })
       .catch(err => {
@@ -103,13 +152,18 @@ const AuthProvider = ({children}) => {
   const signUpAsDomiciliary = async data => {
     let errors = false;
 
-    await registerDomiciliaryService(data)
-      .then(({data}) => {
-        console.log(data);
+    const tokenFMC = await messaging().getToken();
+
+    await registerDomiciliaryService({
+      ...data,
+      fmcToken: tokenFMC,
+    })
+      .then(async ({data}) => {
         showSuccess(
           'Disfruta como domiciliario',
           'Usuario registrado correctamente',
         );
+        await messaging().registerDeviceForRemoteMessages();
         //signIn(data.email, data.password);
       })
       .catch(err => {

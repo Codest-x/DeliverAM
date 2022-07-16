@@ -10,7 +10,6 @@ import {
   StatusBar,
   RefreshControl,
   TouchableOpacity,
-  Button,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {getOrderById} from '../../services/ordersService';
@@ -19,16 +18,20 @@ import {theme} from '../../constants/theme';
 import UserInfoHeader from '../../components/UserInfoHeader';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useAuth} from '../../contexts/auth';
-import {useSocketIO} from '../../contexts/socketio';
 import ButtonWithLoader from '../../components/ButtonWithLoader';
 import {acceptOrder} from '../../services/ordersService';
+import {
+  sendMessagesToOrder,
+  getMessagesByOrder,
+} from '../../services/ordersService';
+import ChatComponent from '../../components/ChatComponent';
 
 const {width, height} = Dimensions.get('window');
 
 export default function OrderPage({route, navigation}) {
   const {orderId} = route.params;
   const {authData} = useAuth();
-  const {orderAccepted} = useSocketIO();
+
   const [order, setOrder] = useState(null);
   const [showMore, setShowMore] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -36,6 +39,25 @@ export default function OrderPage({route, navigation}) {
   const [isChat, setIsChat] = useState(false);
   const [loadingAccept, setLoadingAccept] = useState(false);
   const [loadingOfert, setLoadingOfert] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [newMessages, setNewMessages] = useState([]);
+  const [orderAccepted, setOrderAccepted] = useState();
+
+  /* socket.on(`newMessageD${orderId}`, data => {
+    setNewMessages(data);
+  });
+
+  socket.on(`newMessageC${orderId}`, data => {
+    setNewMessages(data);
+  }); */
+
+  socket.on('newMessage', data => {
+    data.orderId === orderId && setNewMessages(data);
+  });
+
+  socket.on('orderAccepted', data => {
+    setOrderAccepted(data ? data : null);
+  });
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -60,6 +82,12 @@ export default function OrderPage({route, navigation}) {
         showError('Error', err.response.data.error);
       });
   }, [orderId, orderAccepted]);
+
+  useEffect(() => {
+    getMessagesByOrder(orderId).then(messages => {
+      setMessages(messages.reverse());
+    });
+  }, [newMessages]);
 
   return (
     <SafeAreaView style={styles.OrderContainer}>
@@ -121,7 +149,12 @@ export default function OrderPage({route, navigation}) {
                 text="Aceptar Domicilio"
                 isLoading={loadingAccept}
                 onPress={() => {
-                  acceptOrder(orderId, authData?.user._id, authData?.token)
+                  acceptOrder(
+                    orderId,
+                    authData?.user._id,
+                    authData?.token,
+                    order?.client?._id,
+                  )
                     .then(() => {
                       showSuccess(
                         'Orden Aceptada',
@@ -168,6 +201,24 @@ export default function OrderPage({route, navigation}) {
                   Chat
                 </Text>
               </TouchableOpacity>
+              <ChatComponent
+                messages={messages}
+                onSend={messages => {
+                  messages.forEach(message => {
+                    sendMessagesToOrder(orderId, {
+                      text: message.text,
+                      userType: 'Domiciliario',
+                    })
+                      .then(() => {
+                        showSuccess('Exito', 'Mensaje enviado');
+                      })
+                      .catch(err => {
+                        showError('Error', err.response.data.error);
+                      });
+                  });
+                }}
+                userId={order?.domiciliary._id}
+              />
             </View>
           )}
         </>
@@ -244,7 +295,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     position: 'absolute',
-    backgroundColor: theme.colors.accentColor,
+    backgroundColor: theme.colors.primaryColor,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },

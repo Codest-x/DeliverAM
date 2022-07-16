@@ -45,6 +45,64 @@ const registerDomiciliaryService = async data => {
   });
 };
 
+const getUserFMCToken = async (token, client) => {
+  return await axios.post(
+    api.GET_USER_FMC_TOKEN,
+    {
+      client,
+    },
+    {
+      headers: {
+        'x-access-token': token,
+      },
+    },
+  );
+};
+
+const getDomiciliaryFMCToken = async (token, domiciliary) => {
+  return await axios.post(
+    api.GET_DOMICILIARY_FMC_TOKEN,
+    {
+      domiciliary,
+    },
+    {
+      headers: {
+        'x-access-token': token,
+      },
+    },
+  );
+};
+
+const updateDomiciliaryFMCToken = async (token, domiciliary, fmcToken) => {
+  return await axios.post(
+    api.UPDATE_DOMICILIARY_FMC_TOKEN,
+    {
+      domiciliary,
+      fmcToken,
+    },
+    {
+      headers: {
+        'x-access-token': token,
+      },
+    },
+  );
+};
+
+const updateClientFMCToken = async (token, client, fmcToken) => {
+  return await axios.post(
+    api.UPDATE_USER_FMC_TOKEN,
+    {
+      client,
+      fmcToken,
+    },
+    {
+      headers: {
+        'x-access-token': token,
+      },
+    },
+  );
+};
+
 const sendUserUbication = async data => {
   await axios.post(
     `${api.SEND_DOMICILIARY_UBICATION}${data.userId}`,
@@ -100,4 +158,8 @@ export {
   registerDomiciliaryService,
   getUserByToken,
   sendUserUbication,
+  getUserFMCToken,
+  getDomiciliaryFMCToken,
+  updateClientFMCToken,
+  updateDomiciliaryFMCToken,
 };

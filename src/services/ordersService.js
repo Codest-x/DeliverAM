@@ -54,10 +54,10 @@ const addOrder = async (order, token) => {
   return response.data;
 };
 
-const acceptOrder = async (orderId, domiciliary, token) => {
+const acceptOrder = async (orderId, domiciliary, token, client) => {
   const response = await axios.post(
     `${api.ACCEPT_ORDER}${orderId}`,
-    {domiciliary},
+    {domiciliary, client},
     {
       headers: {
         'x-access-token': token,
@@ -65,6 +65,26 @@ const acceptOrder = async (orderId, domiciliary, token) => {
     },
   );
   return response.data;
+};
+
+const sendMessagesToOrder = async (orderId, data) => {
+  const response = await axios.post(
+    `${api.SEND_MESSAGES_TO_ORDER}${orderId}/messages`,
+    data,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  return response.data;
+};
+
+const getMessagesByOrder = async orderId => {
+  const response = await axios.get(
+    `${api.GET_MESSAGES_BY_ORDER}${orderId}/messages`,
+  );
+  return response.data.messages;
 };
 
 const deleteOrderService = async (orderId, token) => {
@@ -84,4 +104,6 @@ export {
   getOrderById,
   acceptOrder,
   getOrdersFromDomiciliary,
+  sendMessagesToOrder,
+  getMessagesByOrder,
 };

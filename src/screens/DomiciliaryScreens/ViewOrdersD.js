@@ -13,18 +13,22 @@ import React, {useState, useEffect} from 'react';
 import OrderCard from '../../components/OrderCard';
 import {theme} from '../../constants/theme';
 import {useAuth} from '../../contexts/auth';
-import {useSocketIO} from '../../contexts/socketio';
 import {showError, showSuccess} from '../../utils/helperFunctions';
 import {getOrdersFromDomiciliary} from '../../services/ordersService';
 import OrderActionsButtons from '../../components/OrderActionsButtons';
+import socket from '../../utils/utils';
 
 export default function ViewOrdersD({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [orders, SetOrders] = useState([]);
+  const [orderAccepted, SetOrderAccepted] = useState();
 
   const {authData} = useAuth();
-  const {orderAccepted} = useSocketIO();
+
+  socket.on('orderAccepted', data => {
+    SetOrderAccepted(data ? data : null);
+  });
 
   const onRefresh = () => {
     setRefreshing(true);

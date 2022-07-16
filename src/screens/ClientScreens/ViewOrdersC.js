@@ -14,18 +14,27 @@ import OrderCard from '../../components/OrderCard';
 import {theme} from '../../constants/theme';
 import {getOrdersFromUser} from '../../services/ordersService';
 import {useAuth} from '../../contexts/auth';
-import {useSocketIO} from '../../contexts/socketio';
 import OrderActionsButtons from '../../components/OrderActionsButtons';
 import {deleteOrderService} from '../../services/ordersService';
 import {showError, showSuccess} from '../../utils/helperFunctions';
+import socket from '../../utils/utils';
 
-export default function ViewOrdersC() {
+export default function ViewOrdersC({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [orders, SetOrders] = useState([]);
+  const [newOrder, setNewOrder] = useState();
+  const [deleteOrder, setDeleteOrder] = useState();
 
   const {authData} = useAuth();
-  const {newOrder, deleteOrder} = useSocketIO();
+
+  socket.on('orderSaved', data => {
+    data.client === authData?.user?._id && setNewOrder(data ? data : null);
+  });
+
+  socket.on('orderDeleted', data => {
+    data.client === authData?.user?._id && setDeleteOrder(data ? data : null);
+  });
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -71,7 +80,9 @@ export default function ViewOrdersC() {
                   key={order._id}
                   data={order}
                   onPress={() => {
-                    console.log(order?._id);
+                    navigation.navigate('Orden', {
+                      orderId: order._id,
+                    });
                   }}
                   actionButtons={
                     <OrderActionsButtons

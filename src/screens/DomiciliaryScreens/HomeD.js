@@ -16,17 +16,31 @@ import {showError, showSuccess} from '../../utils/helperFunctions';
 import {sendUserUbication} from '../../services/authService';
 import {useLocation} from '../../contexts/location';
 import {getAllOrders} from '../../services/ordersService';
-import {useSocketIO} from '../../contexts/socketio';
 import OrderCard from '../../components/OrderCard';
+import socket from '../../utils/utils';
 
 export default function HomeD({navigation}) {
   const {authData, loading} = useAuth();
   const {locationData} = useLocation();
-  const {newOrder, deleteOrder, orderAccepted} = useSocketIO();
 
   const [orders, setOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loadingOrders, setLoadingOrders] = useState(false);
+  const [newOrder, setNewOrder] = useState();
+  const [deleteOrder, setDeleteOrder] = useState();
+  const [orderAccepted, setOrderAccepted] = useState();
+
+  socket.on('orderSaved', data => {
+    setNewOrder(data ? data : null);
+  });
+
+  socket.on('orderDeleted', data => {
+    setDeleteOrder(data ? data : null);
+  });
+
+  socket.on('orderAccepted', data => {
+    setOrderAccepted(data ? data : null);
+  });
 
   const onRefresh = () => {
     setRefreshing(true);

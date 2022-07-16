@@ -16,17 +16,31 @@ import MapComponent from '../../components/MapComponent';
 import {getAllDomiciliaryUbications} from '../../services/clientService';
 import {getOrdersFromUser} from '../../services/ordersService';
 import {useAuth} from '../../contexts/auth';
-import {useSocketIO} from '../../contexts/socketio';
+import socket from '../../utils/utils';
 
 export default function HomeC({navigation}) {
   const [refreshing, setRefreshing] = useState(false);
   const [domiciliaryMarkers, setMarkers] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [newOrder, setNewOrder] = useState();
+  const [deleteOrder, setDeleteOrder] = useState();
+  const [newUbication, setNewUbication] = useState();
 
   const {authData} = useAuth();
-  const {newOrder, deleteOrder, newUbication} = useSocketIO();
   const {height} = Dimensions.get('window');
+
+  socket.on('orderSaved', data => {
+    data.client === authData?.user?._id && setNewOrder(data ? data : null);
+  });
+
+  socket.on('orderDeleted', data => {
+    data.client === authData?.user?._id && setDeleteOrder(data ? data : null);
+  });
+
+  socket.on('updateUbication', data => {
+    setNewUbication(data ? data : null);
+  });
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -82,7 +96,7 @@ export default function HomeC({navigation}) {
                   key={order._id}
                   data={order}
                   onPress={() => {
-                    console.log(order?._id);
+                    navigation.navigate('Orden', {orderId: order._id});
                   }}
                 />
               ))

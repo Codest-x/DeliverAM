@@ -10,6 +10,7 @@ import ViewOrdersC from './ClientScreens/ViewOrdersC';
 import AddOrder from './ClientScreens/AddOrder';
 import OrderPageD from './Orders/OrderPageD';
 import ViewOrdersD from './DomiciliaryScreens/ViewOrdersD';
+import OrderPageC from './Orders/OrderPageC';
 
 export {
   HomeC,
@@ -24,4 +25,5 @@ export {
   AddOrder,
   OrderPageD,
   ViewOrdersD,
+  OrderPageC,
 };

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "337287905182",
+    "project_id": "deliveram-test",
+    "storage_bucket": "deliveram-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337287905182:android:3cd30542b8f5bd81aa608f",
+        "android_client_info": {
+          "package_name": "com.codestx.deliveram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337287905182-he7r4nlff1edf22378v3cg0mi7jnnvet.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFzoRKv5t0gxmyd_64yBMaP1UOjIU0kts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337287905182-he7r4nlff1edf22378v3cg0mi7jnnvet.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
